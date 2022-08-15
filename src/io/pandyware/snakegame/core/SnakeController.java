@@ -24,6 +24,7 @@ public class SnakeController implements Runnable {
   @Override
   public void run() {
     while (true) {
+      this.gameScreen.checkFood();
       switch (this.gameScreen.direction) {
         case RIGTH:
           this.gameScreen.moveRigth();
@@ -42,7 +43,7 @@ public class SnakeController implements Runnable {
       }
       try {
         this.gameScreen.repaint();
-        sleep(500);
+        sleep(100);
       } catch (InterruptedException ex) {
         Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
       }
