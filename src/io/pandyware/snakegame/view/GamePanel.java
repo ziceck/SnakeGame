@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package io.pandyware.snakegame.view;
+
 import javax.swing.JPanel;
 
 /**
@@ -11,8 +12,7 @@ import javax.swing.JPanel;
  */
 public class GamePanel extends JPanel {
 
-    public GamePanel() {
-    }
-   
-       
+  public GamePanel() {
+  }
+
 }
