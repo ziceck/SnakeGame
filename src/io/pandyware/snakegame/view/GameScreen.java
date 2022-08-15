@@ -4,7 +4,10 @@
  */
 package io.pandyware.snakegame.view;
 
+import io.pandyware.snakegame.core.Direction;
+import io.pandyware.snakegame.core.KeyChecker;
 import io.pandyware.snakegame.core.Point;
+import io.pandyware.snakegame.core.SnakeController;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -23,67 +26,78 @@ import javax.swing.WindowConstants;
  * @author friky
  */
 public class GameScreen extends JFrame {
-    
-    
-    private ArrayList<Point> points;
-    private final JPanel gamePanel;
-    private int direction = 0;
-    
-    public GameScreen() {
-       gamePanel = new GamePanel();
-       points = new ArrayList();
-       points.add(new Point(169, 62));
-       points.add(new Point(170, 62));
-       points.add(new Point(171, 62));
-       setSize(500, 500);
-       add(gamePanel);
-       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-       setVisible(true);
-       setBackground(Color.yellow);
-        addKeyListener(new KeyListener() {
-           @Override
-           public void keyTyped(KeyEvent e) {
-               // repaint();
-               System.out.println("keyTyped");
-           }
 
-           @Override
-           public void keyPressed(KeyEvent e) {
-               // repaint();
-                System.out.println("keyPressed");
-           }
+  private final ArrayList<Point> points;
+  private final JPanel gamePanel;
+  public Direction direction;
+  private final int DISTANCE = 5;
 
-           @Override
-           public void keyReleased(KeyEvent e) {
-               move();
-               repaint();
-               System.out.println("keyReleased");
-           }
-        });
-       
+  public GameScreen() {
+    this.direction = Direction.RIGTH;
+    gamePanel = new GamePanel();
+    points = new ArrayList();
+    points.add(new Point(169, 62));
+    setSize(500, 500);
+    add(gamePanel);
+    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    setVisible(true);
+    setBackground(Color.yellow);
+    addKeyListener(new KeyChecker(this));
+    this.initThread();
+  }
+
+  public JPanel getGamePanel() {
+    return this.gamePanel;
+  }
+
+  @Override
+  public void paint(Graphics graphics) {
+    super.paint(graphics);
+    System.out.println("paintComponent");
+    for (int i = 0; i < points.size(); i++) {
+      Point point = points.get(i);
+      System.out.println(point.getX());
+      graphics.fillRect(point.getX(), point.getY(), 10, 10);
     }
-    
-    public JPanel getGamePanel() {
-        return this.gamePanel;
+    // this.graphics = graphics;
+    // super.paintComponent(graphics);
+    // graphics.fillRect(200, 62, 30, 10);
+  }
+
+  public void moveRigth() {
+    for (int i = 0; i < points.size(); i++) {
+      Point point = points.get(i);
+      point.setX(point.getX() + this.DISTANCE);
+      System.out.println(point);
     }
-    
-    @Override
-    public void paint(Graphics graphics) {
-        System.out.println("paintComponent");
-        for (int i = 0; i < points.size(); i ++) {
-            Point point = points.get(i);
-            graphics.fillRect(point.getX(), point.getY(), 10, 10);
-        }
-        // this.graphics = graphics;
-        // super.paintComponent(graphics);
-        // graphics.fillRect(200, 62, 30, 10);
+  }
+
+  public void moveLeft() {
+    for (int i = 0; i < points.size(); i++) {
+      Point point = points.get(i);
+      point.setX(point.getX() - this.DISTANCE);
+      System.out.println(point);
     }
-    
-    public void move() {
-        for (int i = 0; i < points.size(); i ++) {
-          Point point = points.get(i);
-          point.setX(this.getX() + 1);
-        }
+  }
+
+  public void moveUp() {
+    for (int i = 0; i < points.size(); i++) {
+      Point point = points.get(i);
+      point.setY(point.getY() - this.DISTANCE);
+      System.out.println(point);
     }
-    
+  }
+
+  public void moveDown() {
+    for (int i = 0; i < points.size(); i++) {
+      Point point = points.get(i);
+      point.setY(point.getY() + this.DISTANCE);
+      System.out.println(point);
+    }
+  }
+
+  private void initThread() {
+    new Thread(new SnakeController(this)).start();
+  }
+
 }
