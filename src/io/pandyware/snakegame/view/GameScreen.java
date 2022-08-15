@@ -8,15 +8,9 @@ import io.pandyware.snakegame.core.Direction;
 import io.pandyware.snakegame.core.KeyChecker;
 import io.pandyware.snakegame.core.Point;
 import io.pandyware.snakegame.core.SnakeController;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import static java.lang.Thread.sleep;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
@@ -37,6 +31,8 @@ public class GameScreen extends JFrame {
     gamePanel = new GamePanel();
     points = new ArrayList();
     points.add(new Point(169, 62));
+    points.add(new Point(170, 62));
+    points.add(new Point(171, 62));
     setSize(500, 500);
     add(gamePanel);
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -56,44 +52,51 @@ public class GameScreen extends JFrame {
     System.out.println("paintComponent");
     for (int i = 0; i < points.size(); i++) {
       Point point = points.get(i);
-      System.out.println(point.getX());
+      System.out.println(point);
       graphics.fillRect(point.getX(), point.getY(), 10, 10);
     }
-    // this.graphics = graphics;
-    // super.paintComponent(graphics);
-    // graphics.fillRect(200, 62, 30, 10);
+  }
+
+  private void updateBody(Point previous) {
+    System.out.println("Size: " + points.size());
+    for (int i = 1; i < points.size(); i++) {
+      int x = previous.getX();
+      int y = previous.getY();
+      Point point = points.get(i);
+      previous.setX(point.getX());
+      previous.setY(point.getY());
+      point.setX(x);
+      point.setY(y);
+      System.out.println(point);
+    }
   }
 
   public void moveRigth() {
-    for (int i = 0; i < points.size(); i++) {
-      Point point = points.get(i);
-      point.setX(point.getX() + this.DISTANCE);
-      System.out.println(point);
-    }
+    Point head = points.get(0);
+    Point previous = new Point(head.getX(), head.getY());
+    head.setX(head.getX() + this.DISTANCE);
+    updateBody(previous);
   }
 
   public void moveLeft() {
-    for (int i = 0; i < points.size(); i++) {
-      Point point = points.get(i);
-      point.setX(point.getX() - this.DISTANCE);
-      System.out.println(point);
-    }
+    Point head = points.get(0);
+    Point previous = new Point(head.getX(), head.getY());
+    head.setX(head.getX() - this.DISTANCE);
+    updateBody(previous);
   }
 
   public void moveUp() {
-    for (int i = 0; i < points.size(); i++) {
-      Point point = points.get(i);
-      point.setY(point.getY() - this.DISTANCE);
-      System.out.println(point);
-    }
+    Point head = points.get(0);
+    Point previous = new Point(head.getX(), head.getY());
+    head.setY(head.getY() - this.DISTANCE);
+    updateBody(previous);
   }
 
   public void moveDown() {
-    for (int i = 0; i < points.size(); i++) {
-      Point point = points.get(i);
-      point.setY(point.getY() + this.DISTANCE);
-      System.out.println(point);
-    }
+    Point head = points.get(0);
+    Point previous = new Point(head.getX(), head.getY());
+    head.setY(head.getY() + this.DISTANCE);
+    this.updateBody(previous);
   }
 
   private void initThread() {
