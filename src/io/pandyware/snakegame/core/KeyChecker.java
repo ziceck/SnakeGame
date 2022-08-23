@@ -33,20 +33,28 @@ public class KeyChecker implements KeyListener {
   @Override
   public void keyPressed(KeyEvent e) {
     int keyCode = e.getKeyCode();
+    Direction direction = this.gameScreen.direction;
     switch (keyCode) {
       case KeyEvent.VK_UP:
-        this.gameScreen.direction = UP;
+        if (direction == LEFT || direction == RIGTH) {
+          this.gameScreen.direction = UP;
+        }
         break;
       case KeyEvent.VK_DOWN:
-        this.gameScreen.direction = DOWN;
-        // handle down 
+        if (direction == LEFT || direction == RIGTH) {
+          this.gameScreen.direction = DOWN;
+        }
         break;
       case KeyEvent.VK_LEFT:
-        this.gameScreen.direction = LEFT;
+        if (direction == UP || direction == DOWN) {
+          this.gameScreen.direction = LEFT;
+        }
         // handle left
         break;
       case KeyEvent.VK_RIGHT:
-        this.gameScreen.direction = RIGTH;
+        if (direction == UP || direction == DOWN) {
+          this.gameScreen.direction = RIGTH;
+        }
         // handle right
         break;
     }
