@@ -24,6 +24,7 @@ public class SnakeController implements Runnable {
   @Override
   public void run() {
     while (true) {
+      this.gameScreen.checkCollision();
       this.gameScreen.checkFood();
       switch (this.gameScreen.direction) {
         case RIGTH:

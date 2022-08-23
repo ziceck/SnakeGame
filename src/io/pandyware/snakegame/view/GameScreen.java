@@ -46,6 +46,7 @@ public class GameScreen extends JFrame {
     super.paint(graphics);
     drawSnake(graphics);
     graphics.fillRect(this.newHead.getX(), this.newHead.getY(), 10, 10);
+    graphics.drawString("Puntuación: " + (this.points.size() - 3), 400, 50);
     // System.out.println("paintComponent");
 
   }
@@ -119,6 +120,16 @@ public class GameScreen extends JFrame {
     int min = 10;
     int max = 40;
     return ThreadLocalRandom.current().nextInt(min, max + 1);
+  }
+  
+  public void checkCollision() {
+    Point head = points.get(0);
+    for (int i = 1; i < points.size(); i++) {
+      Point body = points.get(i);
+      if (head.getX() == body.getX() && head.getY() == body.getY()) {
+        System.out.println("Perdiste");
+      }
+    }
   }
 
 }

@@ -27,7 +27,7 @@ public class KeyChecker implements KeyListener {
   @Override
   public void keyTyped(KeyEvent e) {
     // repaint();
-    System.out.println("keyTyped");
+    // System.out.println("keyTyped");
   }
 
   @Override
@@ -59,12 +59,12 @@ public class KeyChecker implements KeyListener {
         break;
     }
     // repaint();
-    System.out.println("keyPressed");
+    // System.out.println("keyPressed");
   }
 
   @Override
   public void keyReleased(KeyEvent e) {
-    System.out.println("keyReleased");
+    // System.out.println("keyReleased");
   }
 
 }
