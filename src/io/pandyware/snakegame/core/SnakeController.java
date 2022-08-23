@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  */
 public class SnakeController implements Runnable {
   
-  private GameScreen gameScreen;
+  private final GameScreen gameScreen;
   
   public SnakeController(GameScreen gameScreen) {
     this.gameScreen = gameScreen;

@@ -33,10 +33,10 @@ public class GameScreen extends JFrame {
     points.add(new Point(170, 60));
     points.add(new Point(160, 60));
     points.add(new Point(150, 60));
+    setBackground(Color.yellow);
     setSize(500, 500);
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     setVisible(true);
-    setBackground(Color.yellow);
     addKeyListener(new KeyChecker(this));
     this.initThread();
   }
@@ -46,20 +46,20 @@ public class GameScreen extends JFrame {
     super.paint(graphics);
     drawSnake(graphics);
     graphics.fillRect(this.newHead.getX(), this.newHead.getY(), 10, 10);
-    System.out.println("paintComponent");
+    // System.out.println("paintComponent");
 
   }
-  
+
   private void drawSnake(Graphics graphics) {
-      for (int i = 0; i < this.points.size(); i++) {
+    for (int i = 0; i < this.points.size(); i++) {
       Point point = points.get(i);
-      System.out.println(point);
+      // System.out.println(point);
       graphics.fillRect(point.getX(), point.getY(), 10, 10);
-    } 
+    }
   }
 
   private void updateBody(Point previous) {
-    System.out.println("Size: " + points.size());
+    // System.out.println("Size: " + points.size());
     for (int i = 1; i < this.points.size(); i++) {
       int x = previous.getX();
       int y = previous.getY();
@@ -68,7 +68,7 @@ public class GameScreen extends JFrame {
       previous.setY(point.getY());
       point.setX(x);
       point.setY(y);
-      System.out.println(point);
+      // System.out.println(point);
     }
   }
 
@@ -103,19 +103,22 @@ public class GameScreen extends JFrame {
   private void initThread() {
     new Thread(new SnakeController(this)).start();
   }
-  
+
   public void checkFood() {
     Point head = this.points.get(0);
     if (this.newHead.getX() == head.getX() && this.newHead.getY() == head.getY()) {
       this.points.add(0, new Point(this.newHead.getX(), this.newHead.getY()));
       this.newHead.setX(this.randomNumber() * 10);
       this.newHead.setY(this.randomNumber() * 10);
-      System.out.println("Food");
+      System.out.println("new head");
+      System.out.println(newHead);
     }
   }
-  
+
   private int randomNumber() {
-    return ThreadLocalRandom.current().nextInt(0, 40 + 1);
+    int min = 10;
+    int max = 40;
+    return ThreadLocalRandom.current().nextInt(min, max + 1);
   }
 
 }

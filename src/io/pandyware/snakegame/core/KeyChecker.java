@@ -18,7 +18,7 @@ import java.awt.event.KeyListener;
  */
 public class KeyChecker implements KeyListener {
 
-  private GameScreen gameScreen;
+  private final GameScreen gameScreen;
 
   public KeyChecker(GameScreen gameScreen) {
     this.gameScreen = gameScreen;
